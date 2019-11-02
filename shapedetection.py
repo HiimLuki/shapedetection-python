@@ -1,3 +1,4 @@
+
 import cv2
 import numpy as np
 
@@ -69,6 +70,8 @@ while True:
                 cv2.putText(frame, "Rechteck", (x, y), font, 1, (0))
             elif len(approx) == 5:
                 cv2.putText(frame, "Pentagon", (x, y), font, 1, (0))
+            elif 10 < len(approx) < 19:
+                cv2.putText(frame, "Cat", (x, y), font, 1, (0))
             #elif 6 < len(approx) < 15:
              #   cv2.putText(frame, "Ellipse", (x, y), font, 1, (0))
             else:
