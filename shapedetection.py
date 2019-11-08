@@ -28,7 +28,7 @@ while True:
     imgray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
     #1.frame merken
-    # if frameCount == 0:
+  # if frameCount == 0:
     #     firstFrame = imgray
     # frameCount += 1
     
@@ -42,8 +42,9 @@ while True:
     #wenn etwas dunkler geht 211 ganz gut
     #maxval (da wo 255 steht) gibt den kontrast vom neuen bild an --> 255 heißt alles komplett schwarz und weiß
     #egal ob THRESH_BINARY_INV  oder nur THRESH_BINARY --> dann sit nur schwarz und weiß vertauscht
-    _, threshold = cv2.threshold(gray, thresh, 255, cv2.THRESH_BINARY_INV)
-   
+    #_, threshold = cv2.threshold(gray, thresh, 255, cv2.THRESH_BINARY_INV)
+    _, threshold = cv2.threshold(absDiff, thresh, 255, cv2.THRESH_BINARY_INV)
+
     #original werte aus dem video
     #_, threshold = cv2.threshold(imgray, 240, 255, cv2.THRESH_BINARY)
 
