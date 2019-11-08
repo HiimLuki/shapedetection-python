@@ -43,8 +43,8 @@ while True:
     #wenn etwas dunkler geht 211 ganz gut
     #maxval (da wo 255 steht) gibt den kontrast vom neuen bild an --> 255 heißt alles komplett schwarz und weiß
     #egal ob THRESH_BINARY_INV  oder nur THRESH_BINARY --> dann sit nur schwarz und weiß vertauscht
-    #_, threshold = cv2.threshold(gray, thresh, 255, cv2.THRESH_BINARY_INV)
-    _, threshold = cv2.threshold(absDiff, thresh, 255, cv2.THRESH_BINARY_INV)
+    _, threshold = cv2.threshold(gray, thresh, 255, cv2.THRESH_BINARY_INV)
+    #_, threshold = cv2.threshold(absDiff, thresh, 255, cv2.THRESH_BINARY_INV)
 
     #original werte aus dem video
     #_, threshold = cv2.threshold(imgray, 240, 255, cv2.THRESH_BINARY)
@@ -60,6 +60,7 @@ while True:
 
         #if bedingung sorgt dafür das nur große sachen erkannt werden (aus realtime_shape_detection geklaut)
         if area > 3000:
+            #je kleiner die 0.01 desto genauer der rand
             approx = cv2.approxPolyDP(cnt, 0.01*cv2.arcLength(cnt, True), True)
             cv2.drawContours(frame, [approx], 0, (0), 5)
             x = approx.ravel()[0]
@@ -71,8 +72,12 @@ while True:
                 cv2.putText(frame, "Rechteck", (x, y), font, 1, (0))
             elif len(approx) == 5:
                 cv2.putText(frame, "Pentagon", (x, y), font, 1, (0))
+            elif 15 < len(approx) < 18:
+                cv2.putText(frame, "Ente", (x, y), font, 1, (0))
             elif 10 < len(approx) < 19:
-                cv2.putText(frame, "Cat", (x, y), font, 1, (0))
+                cv2.putText(frame, "Katze", (x, y), font, 1, (0))
+            elif 20 < len(approx) < 24:
+                cv2.putText(frame, "Elefant", (x, y), font, 1, (0))
             #elif 6 < len(approx) < 15:
              #   cv2.putText(frame, "Ellipse", (x, y), font, 1, (0))
             else:
