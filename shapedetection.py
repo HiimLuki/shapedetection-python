@@ -2,6 +2,9 @@
 import cv2
 import numpy as np
 
+import server
+server.start()
+
 cap = cv2.VideoCapture(0)
 
 ##bsp aus der open CV dokumentation
@@ -60,28 +63,38 @@ while True:
 
         #if bedingung sorgt dafür das nur große sachen erkannt werden (aus realtime_shape_detection geklaut)
         if area > 3000:
+
             #je kleiner die 0.01 desto genauer der rand
             approx = cv2.approxPolyDP(cnt, 0.01*cv2.arcLength(cnt, True), True)
             cv2.drawContours(frame, [approx], 0, (0), 5)
             x = approx.ravel()[0]
             y = approx.ravel()[1]
 
+            form = "Keine Form"
+
             if len(approx) == 3:
-                cv2.putText(frame, "Dreiech", (x, y), font, 1, (0))
+                cv2.putText(frame, "Dreieck", (x, y), font, 1, (0))
+                form = "Dreieck"
             elif len(approx) == 4:
                 cv2.putText(frame, "Rechteck", (x, y), font, 1, (0))
+                form = "Rechteck"
             elif len(approx) == 5:
                 cv2.putText(frame, "Pentagon", (x, y), font, 1, (0))
-            elif 15 < len(approx) < 18:
-                cv2.putText(frame, "Ente", (x, y), font, 1, (0))
+            #elif 15 < len(approx) < 18:
+             #   cv2.putText(frame, "Ente", (x, y), font, 1, (0))
             elif 10 < len(approx) < 19:
                 cv2.putText(frame, "Katze", (x, y), font, 1, (0))
+                form = "Katze"
             elif 20 < len(approx) < 24:
                 cv2.putText(frame, "Elefant", (x, y), font, 1, (0))
+                form = "Elefant"
             #elif 6 < len(approx) < 15:
              #   cv2.putText(frame, "Ellipse", (x, y), font, 1, (0))
             else:
                 cv2.putText(frame, "Kreis", (x, y), font, 1, (0))
+                form = "Kreis"
+
+            server.send(message='position', data={'x': form, 'y': form})
 
             cv2.imshow("shapes", frame)
             cv2.imshow("Threshold", threshold)
