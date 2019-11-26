@@ -1,14 +1,22 @@
-//Sound funktioniert noch nicht
-var playStopButton = document.getElementById("playStopButton");
-var isPlaying = false;
 
-var context = new AudioContext();
-var sound = new Audio("sounds/katze.mp3");
-sound.crossOrigin = "anonymous";
-var source = context.createMediaElementSource(sound);
-source.connect(context.destination);
+window.onload=function(){
+    var playStopButton = document.getElementById("playStopButton");
+    var isPlaying = false;
 
-playStopButton.addEventListener("click", function (e) {
+    
+    var context = new AudioContext();
+    var sound = new Audio("sounds/katze.mp3");
+    sound.crossOrigin = "anonymous";
+    var source = context.createMediaElementSource(sound);
+    source.connect(context.destination);
+
+    playStopButton.addEventListener("click", playSound);
+    sound.addEventListener("click", sound);
+    
+}
+
+
+function playSound() {
     if (isPlaying) {
         sound.pause();
         playStopButton.innerHTML = "Play";
@@ -18,10 +26,12 @@ playStopButton.addEventListener("click", function (e) {
     }
 
     isPlaying = !isPlaying;
-});
+}
 
-sound.addEventListener("ended", function (e) {
+
+function sound(){
     isPlaying = false;
     playStopButton.innerHTML = "Play";
-});
+}
+
 
