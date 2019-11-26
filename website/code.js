@@ -9,10 +9,16 @@ function initialize(){
 
 		//Funktioniert noch nicht
 		var tierform = `${data.x}`;
-		console.log(`${data.x}`);
+		console.log(tierform);
 	
 		if(tierform=="Kreis"){
-			document.getElementById("animal_img").innerHTML = `Bljat`;
+			document.getElementById("animal_img").innerHTML = "Kreis";
+		}
+		else if(tierform=="Katze"){
+			document.getElementById("animal_img").innerHTML = '<img src="images/katze.jpg" alt="" width="240" height="71" />';
+		}
+		else if(tierform=="Elefant"){
+			document.getElementById("animal_img").innerHTML = "Elefant";
 		}
 	});
 
