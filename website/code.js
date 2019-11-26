@@ -9,8 +9,9 @@ function initialize(){
 
 		//Funktioniert noch nicht
 		var tierform = `${data.x}`;
+
 		console.log(tierform);
-	
+		while(true){
 		if(tierform=="Kreis"){
 			document.getElementById("animal_img").innerHTML = "Kreis";
 		}
@@ -20,6 +21,7 @@ function initialize(){
 		else if(tierform=="Elefant"){
 			document.getElementById("animal_img").innerHTML = "Elefant";
 		}
+	}
 	});
 
 
