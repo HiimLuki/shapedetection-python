@@ -3,18 +3,21 @@
 	<head>
 		<title>Formies</title>
 		<script src="socket.io.js"></script>
-		<script src="code.js"></script>
-		<script src="sound.js"></script>
-		<link rel="stylesheet" href="stylesheet.css">
+		<script src="code.js?v=<?php echo time()"></script>
+		<script src="sound.js?v=<?php echo time()"></script>
+		<link rel="stylesheet" href="stylesheet.css?v=<?php echo time()">
 	</head>
 	<body onload="initialize()">
 		<div class="bgimg-1">
 			<div class="caption">
 			  <span id="label" class="border">Tierform</span> <br> <br>
-			  <span id="animal_img" class="border">IMAGE</span> <br> <br> <br> <br>
-			  <button id="playStopButton">Play</button>
+			  <span id="animal_img">IMAGE</span> <br> <br> <br> <br>
+			  
 			</div>
-		  </div>
+
+			<button id="playStopButton">Darf Sound abgespielt werden?</button>
+		</div>
 		
 	</body>
+
 </html>
