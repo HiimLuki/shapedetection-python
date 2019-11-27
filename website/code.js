@@ -14,6 +14,7 @@ function initialize(){
             document.getElementById("animal_img").innerHTML = '<img src="images/kreis.jpg" alt="" width="320" height="240" />';
             if(allowsound==true){
                     playCat();
+		    allowsound=false;
             }
             
 		}
@@ -21,12 +22,14 @@ function initialize(){
             document.getElementById("animal_img").innerHTML = '<img src="images/katze.jpg" alt="" width="320" height="240" />';
             if(allowsound==true){
                 playCat();
+		    allowsound=false;
             }
 		}
 		else if(tierform=="Elefant"){
             document.getElementById("animal_img").innerHTML = '<img src="images/elefant.jpg" alt="" width="320" height="240" />';
             if(allowsound==true){
                 playElefant();
+		    allowsound=false;
             }
 		}
 		
