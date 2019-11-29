@@ -25,8 +25,8 @@ while True:
     lower_red = np.array([1,120,70])
     upper_red = np.array([7,255,255])
 
-    #mask_red = cv2.inRange(hsv, lower_red, upper_red)
-    #mask_red = cv2.erode(mask_red, kernel)
+    mask_red = cv2.inRange(hsv, lower_red, upper_red)
+    mask_red = cv2.erode(mask_red, kernel)
 
     #Grüner Wertebereich
     lower_green = np.array([25, 52, 72])
@@ -36,13 +36,35 @@ while True:
     mask_green = cv2.erode(mask_green, kernel)
 
     contours_green, _ = cv2.findContours(mask_green, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    #contours_red, _ = cv2.findContours(mask_red, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours_red, _ = cv2.findContours(mask_red, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     contours_blue, _ = cv2.findContours(mask_blue, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     font = cv2.FONT_HERSHEY_COMPLEX
 
     #Blaue Formen erkennen
     for cnt in contours_blue:
+        area = cv2.contourArea(cnt)
+
+        #if bedingung sorgt dafür das nur große sachen erkannt werden
+        if area > 3000:
+
+            #je kleiner die 0.01 desto genauer der rand
+            approx = cv2.approxPolyDP(cnt, 0.01*cv2.arcLength(cnt, True), True)
+            cv2.drawContours(frame, [approx], 0, (0), 5)
+            x = approx.ravel()[0]
+            y = approx.ravel()[1]
+
+            form = "Keine Form"
+
+            if 20 < len(approx) < 24:
+                cv2.putText(frame, "Elefant", (x, y), font, 1, (0))
+                form = "Elefant"
+          
+
+            server.send(message='position', data={'x': form, 'y': form})
+
+    #Rote Formen erkennen  
+    for cnt in contours_red:
         area = cv2.contourArea(cnt)
 
         #if bedingung sorgt dafür das nur große sachen erkannt werden (aus realtime_shape_detection geklaut)
@@ -56,43 +78,15 @@ while True:
 
             form = "Keine Form"
 
-            if len(approx) == 4:
-                cv2.putText(frame, "Rechteck", (x, y), font, 1, (0))
-                form = "Rechteck"
-            elif 20 < len(approx) < 24:
-                cv2.putText(frame, "Elefant", (x, y), font, 1, (0))
-                form = "Elefant"
-            else:
-                cv2.putText(frame, "Kreis", (x, y), font, 1, (0))
-                form = "Kreis"
-
-            server.send(message='position', data={'x': form, 'y': form})
-
-    #Rote Formen erkennen  
-    # for cnt in contours_red:
-    #     area = cv2.contourArea(cnt)
-
-    #     #if bedingung sorgt dafür das nur große sachen erkannt werden (aus realtime_shape_detection geklaut)
-    #     if area > 3000:
-
-    #         #je kleiner die 0.01 desto genauer der rand
-    #         approx = cv2.approxPolyDP(cnt, 0.01*cv2.arcLength(cnt, True), True)
-    #         cv2.drawContours(frame, [approx], 0, (0), 5)
-    #         x = approx.ravel()[0]
-    #         y = approx.ravel()[1]
-
-    #         form = "Keine Form"
-
-    #         if len(approx) == 4:
-    #             cv2.putText(frame, "Rechteck", (x, y), font, 1, (0))
-    #             form = "Rechteck"
-    #         elif 15 < len(approx) < 18:
-    #             cv2.putText(frame, "Ente", (x, y), font, 1, (0))
-    #         else:
-    #             cv2.putText(frame, "Kreis", (x, y), font, 1, (0))
-    #             form = "Kreis"
+            # if len(approx) == 4:
+            #     cv2.putText(frame, "Rechteck", (x, y), font, 1, (0))
+            #     form = "Rechteck"
+            if 15 < len(approx) < 22:
+                cv2.putText(frame, "Ente", (x, y), font, 1, (0))
+                form = "Ente"
+           
             
-    #         server.send(message='position', data={'x': form, 'y': form})
+            server.send(message='position', data={'x': form, 'y': form})
 
     #Grüne Formen erkennen 
     for cnt in contours_green:
@@ -109,23 +103,19 @@ while True:
 
             form = "Keine Form"
 
-            if len(approx) == 4:
-                cv2.putText(frame, "Rechteck", (x, y), font, 1, (0))
-                form = "Rechteck"
-            elif 10 < len(approx) < 19:
+            
+            if 10 < len(approx) < 19:
                 cv2.putText(frame, "Katze", (x, y), font, 1, (0))
                 form = "Katze"
-            elif len(approx) == 5:
-                cv2.putText(frame, "Pentagon", (x, y), font, 1, (0))
-            else:
-                cv2.putText(frame, "Kreis", (x, y), font, 1, (0))
-                form = "Kreis"
+            # elif len(approx) == 5:
+            #     cv2.putText(frame, "Pentagon", (x, y), font, 1, (0))
+            
 
             server.send(message='position', data={'x': form, 'y': form})
 
     cv2.imshow("shapes", frame)
     #mask_red, mask_green oder mask_blue nehmen
-    cv2.imshow("Mask", mask_green)
+    cv2.imshow("Mask", mask_red)
 
     key = cv2.waitKey(1)
     #esc zum beenden drücken
