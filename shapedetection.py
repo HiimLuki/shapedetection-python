@@ -67,7 +67,7 @@ while True:
     for cnt in contours_red:
         area = cv2.contourArea(cnt)
 
-        #if bedingung sorgt dafür das nur große sachen erkannt werden (aus realtime_shape_detection geklaut)
+        #if bedingung sorgt dafür das nur große sachen erkannt werden
         if area > 3000:
 
             #je kleiner die 0.01 desto genauer der rand
