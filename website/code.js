@@ -12,32 +12,18 @@ function initialize(){
         //Daten von Python in Variable gespeichert
 		var tierform = `${data.x}`;
 	
-		// if(tierform=="Kreis"){
-        //     //Darstellen des Bildes Kreis
-        //     document.getElementById("animal_img").innerHTML = '<img src="images/kreis.jpg" alt="" width="320" height="240" />';
-        //     //Wenn Button gedrückt kann Sound abgespielt werden (Disablen vom Sound damit er nicht unendlich oft kommt)
-        //     if(allowsound==true){
-        //         playCat();
-        //         allowsound=false;
-        //     }
-            
-		// }
         if(tierform=="Katze"){
             //Darstellen des Bildes Katze
             document.getElementById("animal_img").innerHTML = '<img src="images/katze.jpg" alt="" width="320" height="240" />';
-            //Enablen von Button Katze
-            //document.getElementById("katze").disabled = false;
             //Wenn Button gedrückt kann Sound abgespielt werden (Disablen vom Sound damit er nicht unendlich oft kommt)
             if(allowsound==true){
                 playCat();
                 allowsound=false;
             }
-		}
-		else if(tierform=="Elefant"){
+	}
+	else if(tierform=="Elefant"){
             //Darstellen des Bildes Elefant
             document.getElementById("animal_img").innerHTML = '<img src="images/elefant.jpg" alt="" width="320" height="240" />';
-            //Enablen von Button Elefant
-            //document.getElementById("elefant").disabled = false;
             //Wenn Button gedrückt kann Sound abgespielt werden (Disablen vom Sound damit er nicht unendlich oft kommt)
             if(allowsound==true){
                 playElefant();
@@ -47,8 +33,6 @@ function initialize(){
         else if(tierform=="Ente"){
             //Darstellen des Bildes Elefant
             document.getElementById("animal_img").innerHTML = '<img src="images/ente.jpg" alt="" width="320" height="240" />';
-            //Enablen von Button Elefant
-            //document.getElementById("elefant").disabled = false;
             //Wenn Button gedrückt kann Sound abgespielt werden (Disablen vom Sound damit er nicht unendlich oft kommt)
             if(allowsound==true){
                 playDuck();
